@@ -17,18 +17,19 @@ def calculate(numbers_array):
             sum = sum + num
             mul = mul * num
         if sum == 2020:
-            print("part one: {}".format(mul))
-            return
+            return mul
 
 
 def part_one(data):
     nums = [data, data]
-    calculate(nums)
+    result = calculate(nums)
+    print("part one: {}".format(result))
 
 
 def part_two(data):
     nums = [data, data, data]
-    calculate(nums)
+    result = calculate(nums)
+    print("part two: {}".format(result))
 
 
 def main():

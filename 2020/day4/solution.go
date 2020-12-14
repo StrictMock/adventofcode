@@ -45,16 +45,7 @@ func validateFields(fields []string, validators FieldValidators) bool {
 
 func validatePassport(data string, validators FieldValidators) bool {
 	fields := strings.Fields(data)
-
-	if !areAllRequiredFieldsPresent(fields, validators) {
-		return false
-	}
-
-	if !validateFields(fields, validators) {
-		return false
-	}
-
-	return true
+	return areAllRequiredFieldsPresent(fields, validators) && validateFields(fields, validators)
 }
 
 func partOne(data []string) int {

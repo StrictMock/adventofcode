@@ -20,7 +20,20 @@ def part_one(data):
 
 
 def part_two(data):
-    return 0
+    unique_questions = {}
+    sum = 0
+    group_count = 0
+    for answer in data:
+        if not answer:
+            sum = sum + len([x for x in unique_questions.values() if x == group_count])
+            unique_questions = {}
+            group_count = 0
+            continue
+        group_count = group_count + 1
+        for question in answer:
+            unique_questions[question] = unique_questions.get(question, 0) + 1
+
+    return sum
 
 
 def main():

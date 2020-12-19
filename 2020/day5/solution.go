@@ -20,8 +20,8 @@ func createSlice(size int) []int {
 	return slice
 }
 
-func partOne(data []string) int {
-	id := 0
+func getListedIDs(data []string) []int {
+	ids := make([]int, 0)
 	for _, seat := range data {
 		rows := createSlice(128)
 		cols := createSlice(8)
@@ -36,7 +36,34 @@ func partOne(data []string) int {
 				cols = cols[len(cols)/2 : len(cols)]
 			}
 		}
-		if currentID := rows[0]*8 + cols[0]; currentID > id {
+		ids = append(ids, rows[0]*8+cols[0])
+	}
+	return ids
+}
+
+func getAllIDs() []int {
+	ids := make([]int, 0)
+	for _, row := range createSlice(128) {
+		for _, col := range createSlice(8) {
+			ids = append(ids, row*8+col)
+		}
+	}
+	return ids
+}
+
+func isPresent(idToFind int, ids []int) bool {
+	for _, id := range ids {
+		if idToFind == id {
+			return true
+		}
+	}
+	return false
+}
+
+func partOne(data []string) int {
+	id := 0
+	for _, currentID := range getListedIDs(data) {
+		if currentID > id {
 			id = currentID
 		}
 	}
@@ -44,6 +71,16 @@ func partOne(data []string) int {
 }
 
 func partTwo(data []string) int {
+	allIds := getAllIDs()
+	listedIds := getListedIDs(data)
+	for _, id := range allIds {
+		if isPresent(id, listedIds) {
+			continue
+		}
+		if isPresent(id+1, listedIds) && isPresent(id-1, listedIds) {
+			return id
+		}
+	}
 	return 0
 }
 
